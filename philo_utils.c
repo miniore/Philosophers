@@ -6,7 +6,7 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 21:11:47 by miniore           #+#    #+#             */
-/*   Updated: 2025/01/24 21:12:27 by miniore          ###   ########.fr       */
+/*   Updated: 2025/01/25 11:55:20 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,27 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (result * sign);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c > 47 && c < 58)
+		return (1);
+	return (0);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+	int	x;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i] != '\0')
+	{
+		x = s[i];
+		write (fd, &x, 1);
+		i++;
+	}
 }
