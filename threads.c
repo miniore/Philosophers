@@ -6,7 +6,7 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:13:55 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/29 13:11:23 by miniore          ###   ########.fr       */
+/*   Updated: 2025/04/30 15:15:07 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,22 @@ void    ft_one_philo(t_philo *philo)
 void    *checker(void *args)
 {
     t_philo  *aux;
+    int     flag;
 
     aux = (t_philo *)args;
+    flag = 0;
     while(aux->args->dead == 0)
     {
         pthread_mutex_lock(&aux->lock);
         if(aux->time_2_die && ft_get_time() >= aux->time_2_die && !aux->eating)
             ft_print_status(aux, DEAD);
-        if(aux->num_eat == aux->args->t_2_eat)
+        if(aux->num_eat == aux->args->t_2_eat && !flag)
         {
+            flag++;
             pthread_mutex_lock(&aux->args->lock);
             aux->args->finish++;
             printf("finished: %d\n", aux->args->finish);
-            if(aux->args->finish >= aux->args->philo_num) //mirsr esto!!!!!!!!!!!!!
+            if(aux->args->finish >= aux->args->philo_num) //Comen las veces que tienen que comer, pero entra en finished mas veces que hilos hay
                 aux->args->dead = 1;
             pthread_mutex_unlock(&aux->args->lock);
         }

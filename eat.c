@@ -6,7 +6,7 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:14:46 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/29 13:09:33 by miniore          ###   ########.fr       */
+/*   Updated: 2025/04/30 15:12:51 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void    eat(t_philo *aux)
     usleep(aux->args->eat_t * 1000);
     aux->num_eat++;
     aux->eating = 0;
+    printf("Philo %d eat %d times\n", aux->id, aux->num_eat);
     pthread_mutex_unlock(&aux->lock);
     leave_forks(aux);
 }
