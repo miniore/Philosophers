@@ -6,7 +6,7 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:13:55 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/30 15:15:07 by miniore          ###   ########.fr       */
+/*   Updated: 2025/04/30 15:36:02 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void    ft_one_philo(t_philo *philo)
     pthread_mutex_lock(&philo->fork);
     ft_print_status(philo, TAKE);
     pthread_mutex_unlock(&philo->fork);
-    usleep(philo->args->die_t * 1000);
+    usleep(philo->args->die_t * (uint64_t)1000);
     ft_print_status(philo, DEAD);
     return ;
 }
@@ -39,7 +39,6 @@ void    *checker(void *args)
             flag++;
             pthread_mutex_lock(&aux->args->lock);
             aux->args->finish++;
-            printf("finished: %d\n", aux->args->finish);
             if(aux->args->finish >= aux->args->philo_num) //Comen las veces que tienen que comer, pero entra en finished mas veces que hilos hay
                 aux->args->dead = 1;
             pthread_mutex_unlock(&aux->args->lock);
@@ -55,7 +54,7 @@ void    *routine(void *arg)
 
     aux = (t_philo *)arg;
     if(aux->id % 2 == 0)
-        usleep(aux->args->eat_t * 1000);
+        usleep(aux->args->eat_t * (uint64_t)1000);
     if(pthread_create(&aux->ch_thr, NULL, &checker, arg))
         return((void *)1);
     while(aux->args->dead == 0)
@@ -81,7 +80,7 @@ void    threads_start(t_args *args)
     {
         if(pthread_create(&args->philos[i].thr, NULL, &routine, &args->philos[i]))
             return((void)ft_perror("Thr create failed.\n"));
-        usleep(1000);
+        usleep((uint64_t)1000);
         i++;
     }
     i = 0;

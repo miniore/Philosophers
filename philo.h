@@ -6,7 +6,7 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 14:08:58 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/27 21:05:53 by miniore          ###   ########.fr       */
+/*   Updated: 2025/04/30 15:21:28 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ struct s_args
     int         t_2_eat;
     int         dead;
     int         finish;
-    long         eat_t;
-    long        sleep_t; 
-    long         die_t;
-    long        start_time;
-    long        time;
+    uint64_t         eat_t;
+    uint64_t        sleep_t; 
+    uint64_t         die_t;
+    uint64_t        start_time;
+    uint64_t        time;
     pthread_mutex_t lock;
     t_philo     *philos;
 };
