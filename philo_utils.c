@@ -6,11 +6,21 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 21:11:47 by miniore           #+#    #+#             */
-/*   Updated: 2025/01/25 11:55:20 by miniore          ###   ########.fr       */
+/*   Updated: 2025/04/22 12:07:39 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
 
 int	ft_atoi(const char *str)
 {
@@ -37,13 +47,6 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-int	ft_isdigit(int c)
-{
-	if (c > 47 && c < 58)
-		return (1);
-	return (0);
-}
-
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
@@ -58,4 +61,35 @@ void	ft_putstr_fd(char *s, int fd)
 		write (fd, &x, 1);
 		i++;
 	}
+}
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	unsigned char	*ptr;
+	size_t			i;
+
+	ptr = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		ptr[i] = (unsigned char)c;
+		i++;
+	}
+	return (s);
+}
+
+void	*ft_calloc(size_t elem_count, size_t elem_size)
+{
+	size_t	total_size;
+	void	*memory_block;
+
+	total_size = elem_count * elem_size;
+	if (elem_count != '\0' && total_size / elem_count != elem_size)
+		return (0);
+	memory_block = malloc(total_size);
+	if (!memory_block)
+		return (0);
+	if (memory_block != (void *)0)
+		ft_memset(memory_block, 0, total_size);
+	return (memory_block);
 }

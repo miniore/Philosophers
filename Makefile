@@ -1,7 +1,13 @@
 NAME = philo
 
 SRC_FILES = philo.c \
-			philo_utils.c
+			philo_utils.c \
+			initialize.c \
+			get_time.c \
+			args_parse.c \
+			threads.c \
+			eat.c \
+			error.c
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
 CC = gcc

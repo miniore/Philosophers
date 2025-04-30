@@ -6,80 +6,52 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 14:08:53 by miniore           #+#    #+#             */
-/*   Updated: 2025/02/13 12:56:29 by miniore          ###   ########.fr       */
+/*   Updated: 2025/04/29 13:08:40 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "philo.h"
 
-void    ft_perror(char *error_message)
-{
-    ft_putstr_fd(error_message, 2);
-}
-
-int    args_parse(int argc, char **argv)
+void    ft_exit(t_args *args)
 {
     int i;
-    int j;
-    
-    if(argc < 5 || argc > 6)
-        return(1);
+
     i = 0;
-    while(argv[i++])
+    pthread_mutex_destroy(&args->lock);
+    while(i < args->philo_num)
     {
-        j = 0;
-        if(argv[i][0] == '-')
-            return(1);
-        while(argv[i][++j])
-        {
-            if(ft_isdigit(argv[i][j]))
-                return (1);
-        }
+        pthread_mutex_destroy(&args->philos[i].fork);
+        pthread_mutex_destroy(&args->philos[i].lock);
+        i++;
     }
-    return (0);
+    free(args->philos);
 }
 
-int    rules_start(t_args *args, int argc, char **argv)
+void    ft_print_status(t_philo *aux, char *str)
 {
-    args->philo_num = ft_atoi(argv[1]);
-    args->die_t = ft_atoi(argv[2]);
-    args->eat_t = ft_atoi(argv[3]);
-    args->sleep_t = ft_atoi(argv[4]);
-    if(argc == 6)
-        args->times_philo_eat = ft_atoi(argv[5]);
+    pthread_mutex_lock(&aux->args->lock);
+    aux->args->time = ft_get_time() - aux->args->start_time;
+    if(ft_strcmp("died.\n", str) == 0)
+    {
+        printf("%lims: Philo %i %s", aux->args->time, aux->id, str);
+        aux->args->dead = 1;
+    }
     else
-        args->times_philo_eat = -1;
-    if(args->philo_num <= 0 || args->die_t <= 0 || args->eat_t <= 0 ||
-        args->sleep_t <= 0 || args->times_philo_eat <= 0)
-        return(1);
-    return (0);
+        printf("%lims: Philo %i %s", aux->args->time, aux->id, str);
+    pthread_mutex_unlock(&aux->args->lock);
 }
-
-//void    philo_start(t_args *args, 
 
 int main(int argc, char **argv)
 {
-    t_args      *args;
-    //t_philo     **philo;
-    
+    t_args      args;
+
     if(args_parse(argc, argv))
-    {
-        ft_perror("Arguments error.\n");
-        return(1);
-    }
-    args = (t_args *)malloc(sizeof(int));
-    if(rules_start(args, argc, argv))
-    {
-        ft_perror("Arguments error.\n");
-        return(1);
-    }
-    philo_start(t_args *args, );
-    
-    return (0);
+        return(ft_perror("Arguments error 1.\n"));
+    if(rules_start(&args, argc, argv))
+        return(ft_perror("Arguments error 2.\n"));
+    if(philo_start(&args))
+        return(ft_perror("Malloc error.\n"));
+    threads_start(&args);
+    ft_exit(&args);
+    return (EXIT_SUCCESS);
 }
-
-
-
-// NUmerae a cada filosofo en funcion a su posicion en la mesa.
-// Administrar, bloquear y desbloquear los mutex para cada filosofo.
-// Hacer el reparto de tenedores de manera correcta para que cada filosofo comience la ejecucion con su funcion establecida.
