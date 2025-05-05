@@ -6,11 +6,11 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 21:11:47 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/22 12:07:39 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/05 19:05:12 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+# include "../include/philo.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {

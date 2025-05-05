@@ -6,11 +6,11 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:14:46 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/30 15:40:02 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/05 19:09:58 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+# include "../include/philo.h"
 
 void    get_forks(t_philo *aux)
 {
@@ -28,7 +28,6 @@ void    leave_forks(t_philo *aux)
     pthread_mutex_unlock(&aux->fork);
     if(aux->args->dead == 0)
         ft_print_status(aux, SLEEP);
-    printf("Philo %d eat %d times\n", aux->id, aux->num_eat);
     usleep(aux->args->sleep_t * (uint64_t)1000);
 }
 

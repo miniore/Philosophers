@@ -6,11 +6,26 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:06:58 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/27 22:20:09 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/05 19:06:02 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+# include "../include/philo.h"
+
+static void    ft_assign_forks(t_args *args)
+{
+    int i;
+
+    i = 0;
+    while (i < args->philo_num)
+    {
+        if (i == 0)
+            args->philos[i].l_fork = &args->philos[args->philo_num - 1].fork;
+        else
+            args->philos[i].l_fork = &args->philos[i - 1].fork;
+        i++;
+    }
+}
 
 int    philo_start(t_args *args)
 {
@@ -31,13 +46,7 @@ int    philo_start(t_args *args)
         pthread_mutex_init(&args->philos[i].lock, NULL);
         i++;
     }
-    if(args->philo_num > 1)
-    {
-        i = 0;
-        while(i++ < args->philo_num)
-            args->philos[i].l_fork = &args->philos[i - 1].fork;
-        args->philos[0].l_fork = &args->philos[args->philo_num - 1].fork;
-    }
+    ft_assign_forks(args);
     return(EXIT_SUCCESS);
 }
 

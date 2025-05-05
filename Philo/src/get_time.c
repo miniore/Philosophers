@@ -6,11 +6,11 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 21:36:14 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/25 18:48:51 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/05 19:05:49 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+# include "../include/philo.h"
 
 uint64_t    ft_get_time(void)
 {

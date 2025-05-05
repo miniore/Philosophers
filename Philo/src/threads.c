@@ -6,11 +6,11 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:13:55 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/30 15:36:02 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/05 19:10:31 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+# include "../include/philo.h"
 
 void    ft_one_philo(t_philo *philo)
 {
@@ -29,9 +29,10 @@ void    *checker(void *args)
 
     aux = (t_philo *)args;
     flag = 0;
-    while(aux->args->dead == 0)
+    while(aux->args->dead == 0 && !flag)
     {
-        pthread_mutex_lock(&aux->lock);
+        usleep((uint64_t)1000);
+        //pthread_mutex_lock(&aux->lock);
         if(aux->time_2_die && ft_get_time() >= aux->time_2_die && !aux->eating)
             ft_print_status(aux, DEAD);
         if(aux->num_eat == aux->args->t_2_eat && !flag)
@@ -39,11 +40,11 @@ void    *checker(void *args)
             flag++;
             pthread_mutex_lock(&aux->args->lock);
             aux->args->finish++;
-            if(aux->args->finish >= aux->args->philo_num) //Comen las veces que tienen que comer, pero entra en finished mas veces que hilos hay
+            if(aux->args->finish >= aux->args->philo_num)
                 aux->args->dead = 1;
             pthread_mutex_unlock(&aux->args->lock);
         }
-        pthread_mutex_unlock(&aux->lock);
+        //pthread_mutex_unlock(&aux->lock);
     }
     return((void *)0);
 }
@@ -62,6 +63,8 @@ void    *routine(void *arg)
         eat(aux);
         if(aux->args->dead == 0)
             ft_print_status(aux, THINK);
+        if(aux->num_eat == aux->args->t_2_eat)
+            break;
     }
     if(pthread_join(aux->ch_thr, NULL))
         return((void *)1);

@@ -6,11 +6,11 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 14:08:53 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/29 13:08:40 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/05 19:02:47 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+# include "../include/philo.h"
 
 void    ft_exit(t_args *args)
 {
@@ -25,6 +25,7 @@ void    ft_exit(t_args *args)
         i++;
     }
     free(args->philos);
+    args->philos = NULL;
 }
 
 void    ft_print_status(t_philo *aux, char *str)

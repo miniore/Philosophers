@@ -6,11 +6,11 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:02:27 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/27 21:05:41 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/05 19:05:34 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+# include "../include/philo.h"
 
 int    ft_perror(char *error_message)
 {

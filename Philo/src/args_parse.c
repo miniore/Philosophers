@@ -6,11 +6,11 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:07:34 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/13 23:12:02 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/05 19:03:03 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+# include "../include/philo.h"
 
 static int	ft_isdigit(int c)
 {
