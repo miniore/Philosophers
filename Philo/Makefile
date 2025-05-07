@@ -11,7 +11,7 @@ SRC_FILES = src/philo.c \
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Wextra -Werror
 
 all:$(NAME)
 	@echo "make    ✅"

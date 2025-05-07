@@ -6,7 +6,7 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 14:08:53 by miniore           #+#    #+#             */
-/*   Updated: 2025/05/05 19:02:47 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/07 17:28:36 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void    ft_exit(t_args *args)
 
     i = 0;
     pthread_mutex_destroy(&args->lock);
+    pthread_mutex_destroy(&args->print);
     while(i < args->philo_num)
     {
         pthread_mutex_destroy(&args->philos[i].fork);
@@ -30,16 +31,31 @@ void    ft_exit(t_args *args)
 
 void    ft_print_status(t_philo *aux, char *str)
 {
-    pthread_mutex_lock(&aux->args->lock);
+    pthread_mutex_lock(&aux->args->print);
     aux->args->time = ft_get_time() - aux->args->start_time;
     if(ft_strcmp("died.\n", str) == 0)
     {
-        printf("%lims: Philo %i %s", aux->args->time, aux->id, str);
-        aux->args->dead = 1;
+        if(!is_dead(aux))
+        {
+            pthread_mutex_lock(&aux->args->lock);
+            aux->args->dead = 1;
+            pthread_mutex_unlock(&aux->args->lock);
+            printf("%lims: Philo %i %s", aux->args->time, aux->id, str);
+        }
     }
     else
         printf("%lims: Philo %i %s", aux->args->time, aux->id, str);
+    pthread_mutex_unlock(&aux->args->print);
+}
+
+int is_dead(t_philo *aux)
+{
+    int flag;
+
+    pthread_mutex_lock(&aux->args->lock);
+    flag = aux->args->dead;
     pthread_mutex_unlock(&aux->args->lock);
+    return (flag);
 }
 
 int main(int argc, char **argv)
@@ -47,11 +63,11 @@ int main(int argc, char **argv)
     t_args      args;
 
     if(args_parse(argc, argv))
-        return(ft_perror("Arguments error 1.\n"));
+        return(EXIT_FAILURE);
     if(rules_start(&args, argc, argv))
-        return(ft_perror("Arguments error 2.\n"));
+        return(EXIT_FAILURE);
     if(philo_start(&args))
-        return(ft_perror("Malloc error.\n"));
+        return(EXIT_FAILURE);
     threads_start(&args);
     ft_exit(&args);
     return (EXIT_SUCCESS);

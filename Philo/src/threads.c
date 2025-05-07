@@ -6,7 +6,7 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 12:13:55 by miniore           #+#    #+#             */
-/*   Updated: 2025/05/05 19:10:31 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/07 17:53:00 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void    *checker(void *args)
 
     aux = (t_philo *)args;
     flag = 0;
-    while(aux->args->dead == 0 && !flag)
+    while(!is_dead(aux) && !flag)
     {
         usleep((uint64_t)1000);
-        //pthread_mutex_lock(&aux->lock);
+        pthread_mutex_lock(&aux->lock);
         if(aux->time_2_die && ft_get_time() >= aux->time_2_die && !aux->eating)
             ft_print_status(aux, DEAD);
         if(aux->num_eat == aux->args->t_2_eat && !flag)
@@ -44,7 +44,7 @@ void    *checker(void *args)
                 aux->args->dead = 1;
             pthread_mutex_unlock(&aux->args->lock);
         }
-        //pthread_mutex_unlock(&aux->lock);
+        pthread_mutex_unlock(&aux->lock);
     }
     return((void *)0);
 }
@@ -58,10 +58,10 @@ void    *routine(void *arg)
         usleep(aux->args->eat_t * (uint64_t)1000);
     if(pthread_create(&aux->ch_thr, NULL, &checker, arg))
         return((void *)1);
-    while(aux->args->dead == 0)
+    while(!is_dead(aux))
     {
         eat(aux);
-        if(aux->args->dead == 0)
+        if(!is_dead(aux))
             ft_print_status(aux, THINK);
         if(aux->num_eat == aux->args->t_2_eat)
             break;
@@ -82,7 +82,7 @@ void    threads_start(t_args *args)
     while(i < args->philo_num)
     {
         if(pthread_create(&args->philos[i].thr, NULL, &routine, &args->philos[i]))
-            return((void)ft_perror("Thr create failed.\n"));
+            return((void)ft_perror("Thread create failed.\n"));
         usleep((uint64_t)1000);
         i++;
     }
@@ -90,7 +90,7 @@ void    threads_start(t_args *args)
     while(i < args->philo_num)
     {
         if(pthread_join(args->philos[i].thr, NULL))
-            return((void)ft_perror("Thr join failed.\n"));
+            return((void)ft_perror("Thread join failed.\n"));
         i++;
     }
 }

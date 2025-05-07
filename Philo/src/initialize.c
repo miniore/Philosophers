@@ -6,7 +6,7 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:06:58 by miniore           #+#    #+#             */
-/*   Updated: 2025/05/05 19:06:02 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/07 17:28:42 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ int    philo_start(t_args *args)
     i = 0;
     args->philos = (t_philo *)ft_calloc(args->philo_num, sizeof(t_philo));
     if(!args->philos)
-        return(EXIT_FAILURE);
+        return(ft_perror("Malloc error.\n"));
     pthread_mutex_init(&args->lock, NULL);
+    pthread_mutex_init(&args->print, NULL);
     while(i < args->philo_num)
     {
         args->philos[i].id = i + 1;
@@ -60,9 +61,9 @@ int    rules_start(t_args *args, int argc, char **argv)
         args->t_2_eat = ft_atoi(argv[5]);
     else
         args->t_2_eat = -1;
-    if(args->philo_num <= 0 || args->die_t <= 0 || args->eat_t <= 0 ||
-        args->sleep_t <= 0 || args->t_2_eat == 0)
-        return(EXIT_FAILURE);
+    if(args->philo_num <= 0 || args->philo_num > 200 || args->die_t <= 0 ||
+        args->eat_t <= 0 || args->sleep_t <= 0 || args->t_2_eat == 0)
+        return(ft_perror("Invalid value. Arguments can't be 0 or less.\n"));
     args->dead = 0;
     args->finish = 0;
     return (EXIT_SUCCESS);

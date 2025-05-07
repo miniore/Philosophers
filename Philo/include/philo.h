@@ -6,7 +6,7 @@
 /*   By: miniore <miniore@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 14:08:58 by miniore           #+#    #+#             */
-/*   Updated: 2025/04/30 15:21:28 by miniore          ###   ########.fr       */
+/*   Updated: 2025/05/07 12:50:42 by miniore          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ struct s_args
     uint64_t        start_time;
     uint64_t        time;
     pthread_mutex_t lock;
+    pthread_mutex_t print;
     t_philo     *philos;
 };
 
@@ -76,6 +77,7 @@ void    *checker(void *args);
 void    eat(t_philo *aux);
 
 void    ft_print_status(t_philo *aux, char *str);
+int     is_dead(t_philo *aux);
 
 void	ft_putstr_fd(char *s, int fd);
 int	    ft_atoi(const char *str);
