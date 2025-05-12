@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/philo.h"
+#include "../include/philo.h"
 
-int    ft_perror(char *error_message)
+int	ft_perror(char *error_message)
 {
-    ft_putstr_fd(error_message, 2);
-    return(1);
+	ft_putstr_fd(error_message, 2);
+	return (1);
 }
